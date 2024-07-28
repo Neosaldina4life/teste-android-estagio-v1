@@ -1,12 +1,4 @@
 package com.example.desafio.model
 
-data class BusStopsResponse(
-    val ps: List<BusStop>
-)
-
-data class BusStop(
-    val cp: Int,
-    val np: String,
-    val px: Double,
-    val py: Double
-)
+data class Stop(val code: String, val name: String)
+data class BusStopsResponse(val stops: List<Stop>)
