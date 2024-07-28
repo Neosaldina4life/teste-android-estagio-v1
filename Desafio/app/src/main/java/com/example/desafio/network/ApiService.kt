@@ -1,24 +1,21 @@
 package com.example.desafio.network
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.desafio.model.*
+import retrofit2.http.GET
+import retrofit2.http.Query
 
-object ApiClient {
-    private const val BASE_URL = "https://api.olhovivo.sptrans.com.br/v2.2/"
+interface ApiService {
 
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+    @GET("Posicao")
+    suspend fun getVehiclePositions(@Query("token") token: String): VehiclePositionsResponse
 
-    val service: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
-    }
+    @GET("Parada")
+    suspend fun getBusStops(@Query("token") token: String): BusStopsResponse
 
-    suspend fun authenticate(apiKey: String): Boolean {
-        val response = service.authenticate(apiKey)
-        return response.isSuccessful
-    }
+    @GET("Linha")
+    suspend fun getBusLines(@Query("token") token: String): BusLinesResponse
+
+    @GET("Previsao")
+    suspend fun getArrivalForecast(@Query("token") token: String, @Query("codigoParada") stopCode: Int): ArrivalForecastResponse
 }
+
